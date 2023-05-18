@@ -50,4 +50,3 @@ class monitor:
 # mnt.show_info()
 # mm = 7.65
 # print(mnt.mm_to_px(mm))
-# print(round(mnt.mm_to_px(mm)))
