@@ -1,6 +1,8 @@
 import cv2
 import numpy
 import math
+import MonitorFitModule
+import StandardVisualAcuitySheet as Sheet
 
 class screenShow:
 
@@ -18,6 +20,12 @@ class screenShow:
         self.color_dark_grey = (32,32,32)
         self.color_red = (0,0,255)
         self.color_green = (0,255,0)
+
+        # get monitor info and set scale
+        self.monitor = MonitorFitModule.monitor()
+        self.sheet = Sheet.standardSheet()
+        self.sheet.set_ppm(self.monitor.get_ppm())
+        self.sheet.set_distance(1)
 
     def create(self, background = None):
 
@@ -59,7 +67,9 @@ class screenShow:
 
     def update_sign(self, stage, dirc_sign):
         # 计算缩放比例
-        scale = 1 / (1 + 0.1 * stage)
+        scale = self.sheet.get_stage_scale(stage)
+        # scale = 1 / (1 + 0.1 * stage)
+        print(scale)
         # 读取
         self.img_sign = cv2.imread('sign.png')
         sign_w, sign_h, sign_c = self.img_sign.shape

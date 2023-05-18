@@ -46,6 +46,10 @@ class monitor:
     def mm_to_px(self, mm):
         return mm * self.heightDensity / 25.4
 
+    # return pixels per millimetre
+    def get_ppm(self):
+        return self.heightDensity / 25.4
+
 # mnt = monitor()
 # mnt.show_info()
 # mm = 7.65

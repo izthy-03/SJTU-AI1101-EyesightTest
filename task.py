@@ -60,9 +60,6 @@ class sight:
     def print_result(self):
         pass
 
-    def rec_hands(self, img):
-        pass
-
     def begin_task(self):
 
         cap = cv2.VideoCapture(0)
@@ -73,7 +70,7 @@ class sight:
         self.cnt_wa = 0
 
         while self.cont:
-            print(self.cont)
+            # print(self.cont)
             # 读取图像
             time_now = time.time()
             ret, img = cap.read()
