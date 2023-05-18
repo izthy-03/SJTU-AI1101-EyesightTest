@@ -1,74 +1,3 @@
-# <<<<<<< HEAD
-# import cv2
-# import time
-#
-# class sight:
-#     # 定义测试阶段
-#     stage = 0
-#     MAXSTAGE = 10
-#     MAXSIZE = 20
-#     MAXTIME = 5
-#
-#     def __init__(self):
-#         # 开启摄像头
-#         self.cap = cv2.VideoCapture(0)
-#
-#
-#     def update_stage(self, stg):
-#         self.err_cnt = 0               # 错误次数
-#         self.size = self.MAXSIZE            # 当前大小
-#         self.E_dir = rand()            # 当前'E'朝向
-#         self.countdown = self.MAXTIME       # 倒计时
-#         self.time_stamp = time.time()  # 开始时间戳
-#         pass
-#
-#     def print_result(self):
-#         pass
-#
-#     def rec_hands(self, img):
-#         pass
-#
-#     def draw_E(self, img):
-#         pass
-#
-#     def draw_second(self, img):
-#         pass
-#
-#     def begin_task(self):
-#         self.update_stage()
-#         while True:
-#             # 读取图像
-#             ret, img = self.cap.read()
-#
-#             # 识别手势
-#             # 传入 img-相机获取的一帧图像, 返回 dir-手的指向, img-重绘的图像
-#             hand_dir, img = self.rec_hands(img)
-#
-#             # 在图像上绘制'E'字
-#             # 传入 img-图像, size-字号, 返回 img-重绘的图像
-#             img = self.draw_E(img, self.size)
-#
-#             # 在图像上绘制倒计时
-#             # 传入 img-图像, countdown-当前测试阶段剩余时间 , 返回 img-重绘的图像
-#             img = self.draw_second(img, self.countdown)
-#
-#             # 更新测试倒计时
-#             self.countdown = self.MAXTIME - (time.time() - self.time_stamp)  # 待修改
-#             # 指向正确，进入下一阶段
-#             if self.E_dir == hand_dir:
-#                 self.stage = self.stage + 1
-#             # 时间到
-#             if self.countdown <= 0:
-#                 self.err_cnt = self.err_cnt + 1
-#             # 更新测试状态
-#             self.update_stage()
-#
-#             # 判断结束
-#             if self.stage > self.MAXSTAGE or self.err_cnt > 2:
-#                 break
-#
-#         self.print_result()
-# =======
 import cv2
 import time
 import numpy as np
@@ -150,7 +79,8 @@ class sight:
                     int((screen_h - sign_h) / 2) : int((screen_h + sign_h) / 2)] = self.img_sign
 
     def draw_stage_countdown(self):
-        cv2.putText(self.screen, text=str(self.time_stage_end - time.time()), 
+        roundoff = int(self.time_stage_end - time.time())
+        cv2.putText(self.screen, text=str(roundoff),
                     org = (int(self.screen.shape[0] / 2), int(self.screen.shape[1] / 2 - 20)),
                     fontFace = cv2.FONT_HERSHEY_PLAIN,
                     fontScale = 3, color=(0, 0, 0), thickness = 2)
@@ -171,7 +101,7 @@ class sight:
         self.stage_update(0)
 
         while self.cont:
-            print(self.cont)
+            # print(self.cont)
             # 读取图像
             ret, img = self.cap.read()
 
@@ -180,7 +110,9 @@ class sight:
             dirc_hand = self.detector.findDirection(img)
 
             # 创建空白屏幕
-            self.screen = np.zeros((720, 1080, 3), np.uint8) + 255
+            # self.screen = np.zeros((720, 1080, 3), np.uint8) + 255
+            self.screen = img
+
             # 在屏幕上绘制'E'字
             self.draw_sign()
             # 在屏幕上绘制倒计时
