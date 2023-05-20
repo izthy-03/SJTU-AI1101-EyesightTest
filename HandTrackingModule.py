@@ -55,11 +55,11 @@ class HandDetector:
                     cos_y = (lm_tip.y - lm_mcp.y) / dist_tip2mcp
 
                     '''| 1 - right | 2 - down | 3 - left | 4 - up |'''
-                    if cos_x < -0.9:
+                    if cos_x < -0.8:
                         dirc = 1
                     elif cos_y > 0.9:
                         dirc = 2
-                    elif cos_x > 0.9:
+                    elif cos_x > 0.8:
                         dirc = 3
                     elif cos_y < -0.9:
                         dirc = 4
