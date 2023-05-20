@@ -1,9 +1,8 @@
 import cv2
 import mediapipe as mp
 import math
-import time
 
-class handDetector:
+class HandDetector:
  
     def __init__(self):
  
@@ -13,9 +12,12 @@ class handDetector:
                                         min_detection_confidence = 0.5,
                                         min_tracking_confidence = 0.5)
         self.mpDraw = mp.solutions.drawing_utils
+        self.capture = cv2.VideoCapture(0)
 
+    def findDirection(self):
 
-    def findDirection(self, img):
+        ret, img = self.capture.read()
+
         '''get results from the solution'''
         imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         self.results = self.hands.process(imgRGB)
