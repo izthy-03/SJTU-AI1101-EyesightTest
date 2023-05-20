@@ -1,5 +1,5 @@
-import task
+from SightTest import SightTest
 
 if __name__ == '__main__':
-    eyesight = task.sight()
-    eyesight.begin_task()
+    sight_test = SightTest()
+    sight_test.start()
