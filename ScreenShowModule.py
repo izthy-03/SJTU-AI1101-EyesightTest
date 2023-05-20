@@ -88,7 +88,7 @@ class ScreenShow:
         hand_dirc = self.session.hand_direction
         if not hand_dirc:
             return
-        ratio = self.session.timer_confirm.countdown() / self.session.INTERVAL_CONFIRM
+        ratio = self.session.timer_confirm.get_countdown() / self.session.INTERVAL_CONFIRM
         radius = int(self.radius_white + (self.radius_outcut - self.radius_white) * ratio)
         self.screen = cv2.ellipse(img=self.screen, center=self.center, 
                                   axes=(self.radius_outcut, self.radius_outcut), 
@@ -101,7 +101,7 @@ class ScreenShow:
 
     def draw_session_countdown(self):
         
-        ratio = self.session.timer_session.countdown() / self.session.INTERVAL_SESSION
+        ratio = self.session.timer_session.get_countdown() / self.session.INTERVAL_SESSION
         radius = self.radius_white + self.thinkness_session_countdown
         self.screen = cv2.ellipse(img=self.screen, center=self.center, 
                                   axes=(radius,radius), 
