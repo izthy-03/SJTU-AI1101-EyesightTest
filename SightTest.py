@@ -22,7 +22,7 @@ class SightTest:
             session.update(self.stage)
             screenShow.notify_sign_update()
             session.start()
-            result = session.get_result()
+            result = session.result
             self.result_handler(result)
         
         screenShow.notify_test_end()
