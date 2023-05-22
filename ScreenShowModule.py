@@ -73,7 +73,6 @@ class ScreenShow:
         stage = self.session.stage
         sign_dirc = self.session.sign_direction
         scale = self.sheet.get_stage_scale(stage)
-        scale = 1
         size = (int(self.sign_w * scale), int(self.sign_h * scale))
         
         # 旋转
