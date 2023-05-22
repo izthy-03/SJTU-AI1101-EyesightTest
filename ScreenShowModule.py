@@ -132,9 +132,9 @@ class ScreenShow:
         if self.stage == -1:
             append = '<'
             self.stage = 0
-        elif self.stage == 15:
+        elif self.stage == 14:
             append = '>'
-            self.stage = 14
+            self.stage = 13
         result = self.sheet.get_stage_result(self.stage)
         self.screen = cv2.circle(img=self.screen, center=self.center, 
                                  radius=self.radius_white, color=self.color_while, thickness=-1)
