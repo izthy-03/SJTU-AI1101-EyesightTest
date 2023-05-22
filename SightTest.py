@@ -4,6 +4,8 @@ from threading import Thread
 
 class SightTest:
 
+    MAX_STAGE = 14
+
     def __init__(self):
 
         self.stage = 0
@@ -50,5 +52,8 @@ class SightTest:
             if self.cnt_ac == 2:
                 self.test_end = True
             elif self.cnt_wa == 2:
-                self.stage += 1
+                self.stage -= 1
                 self.reset_stage_record()
+        
+        if self.stage < 0 or self.stage > self.MAX_STAGE:
+            self.test_end = True
