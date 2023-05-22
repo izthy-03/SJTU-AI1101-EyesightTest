@@ -43,7 +43,7 @@ class monitor:
         if self.platform == "Linux":
             print("linux")
             # generate temp info file
-            fp = os.popen("xrandr > xrandr_temp.txt")
+            fp = os.popen("xrandr")
             lines = fp.read()
             # find resolution
             head = lines.find("current")
@@ -60,7 +60,15 @@ class monitor:
             self.heightDensity = self.heightResolution / self.height * 25.4
 
             fp.close()
-            os.system("rm xrandr_tmp.txt")
+
+    # 手动设置
+    def set_resolution(self, widthRes, heightRes, width, height):
+        self.widthResolution = widthRes
+        self.heightResolution = heightRes
+        self.width = width
+        self.height = height
+        self.widthDensity = self.widthResolution / self.width * 25.4
+        self.heightDensity = self.heightResolution / self.height * 25.4
 
     # convert string to int and return new index
     def strtol(self, s, head):
