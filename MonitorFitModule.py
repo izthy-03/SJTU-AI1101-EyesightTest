@@ -61,7 +61,7 @@ class monitor:
 
             fp.close()
 
-    # 手动设置
+    # 手动设置分辨率及尺寸(mm)
     def set_resolution(self, widthRes, heightRes, width, height):
         self.widthResolution = widthRes
         self.heightResolution = heightRes
