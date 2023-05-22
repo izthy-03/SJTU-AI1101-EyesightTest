@@ -128,14 +128,26 @@ class ScreenShow:
                       int(self.center[0] - sign_w / 2) : int(self.center[0] + sign_w / 2)] = self.img_sign
 
     def draw_test_result(self):
+        append = ''
+        if self.stage == -1:
+            append = '<'
+            self.stage = 0
+        elif self.stage == 15:
+            append = '>'
+            self.stage = 14
         result = self.sheet.get_stage_result(self.stage)
-        self.screen = cv2.putText(img=self.screen, text="您老没事别看手机了快瞎了吧您", 
-                                  org=(int(self.scn_w/2),int(self.scn_h/2+200)), color=self.color_while,
-                                  fontFace=cv2.FontFace("UTF8"), fontSize=100)
-        self.screen = cv2.putText(img=self.screen, text=str(result), 
+        self.screen = cv2.circle(img=self.screen, center=self.center, 
+                                 radius=self.radius_white, color=self.color_while, thickness=-1)
+        self.screen = putCenterText(img=self.screen, text=append+str(result), 
                                   org=(int(self.scn_w/2),int(self.scn_h/2)), color=self.color_dark_grey,
-                                  fontFace=cv2.FontFace("UTF8"), fontSize=100)
-        self.screen = cv2.putText(img=self.screen, text="医眼丁真，鉴定为：", 
-                                  org=(int(self.scn_w/2),int(self.scn_h/2-200)), color=self.color_while,
-                                  fontFace=cv2.FontFace("UTF8"), fontSize=100)
+                                  fontFace=cv2.FONT_HERSHEY_COMPLEX, fontScale=5, thickness=5)
+        self.screen = putCenterText(img=self.screen, text="Your Test Result is", 
+                                  org=(int(self.scn_w/2),int(self.scn_h/2-250)), color=self.color_while,
+                                  fontFace=cv2.FONT_HERSHEY_COMPLEX, fontScale=2, thickness=1)
 
+def putCenterText(img, text, org, fontFace, fontScale, color, thickness = 1):
+        textSize = cv2.getTextSize(text, fontFace, fontScale, thickness)
+        text_x = int(org[0] - textSize[0][0] / 2)
+        text_y = int(org[1] + textSize[0][1] / 2)
+        cv2.putText(img, text, (text_x, text_y), fontFace, fontScale, color, thickness)
+        return img
