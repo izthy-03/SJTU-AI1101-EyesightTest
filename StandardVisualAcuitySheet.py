@@ -10,6 +10,9 @@ class standardSheet:
         self.img_sign = cv2.imread('sign.png')
         self.screen_ppm = 10
         self.score = [4.0, 4.1, 4.2, 4.3, 4.4, 4.5, 4.6, 4.7, 4.8, 4.9, 5.0, 5.1, 5.2, 5.3]
+        # default distance 1m
+        self.dist_to_screen = 1
+        self.dist_ratio = self.dist_to_screen / 5
 
     # set distance from screen, Std 5m
     def set_distance(self, dist):
