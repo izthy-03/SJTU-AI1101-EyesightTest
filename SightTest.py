@@ -25,8 +25,7 @@ class SightTest:
             result = session.result
             self.result_handler(result)
         
-        screenShow.notify_test_end()
-        t_screenShow.join()
+        screenShow.notify_test_end(self.stage)
 
     def reset_stage_record(self):
 
