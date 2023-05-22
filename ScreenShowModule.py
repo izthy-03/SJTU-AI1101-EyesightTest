@@ -130,9 +130,12 @@ class ScreenShow:
     def draw_test_result(self):
         result = self.sheet.get_stage_result(self.stage)
         self.screen = cv2.putText(img=self.screen, text="您老没事别看手机了快瞎了吧您", 
-                                  org=(int(self.scn_w/2),int(self.scn_h/2+200)), color=self.color_while)
+                                  org=(int(self.scn_w/2),int(self.scn_h/2+200)), color=self.color_while,
+                                  fontFace=cv2.FontFace("UTF8"), fontSize=100)
         self.screen = cv2.putText(img=self.screen, text=str(result), 
-                                  org=(int(self.scn_w/2),int(self.scn_h/2)), color=self.color_dark_grey)
+                                  org=(int(self.scn_w/2),int(self.scn_h/2)), color=self.color_dark_grey,
+                                  fontFace=cv2.FontFace("UTF8"), fontSize=100)
         self.screen = cv2.putText(img=self.screen, text="医眼丁真，鉴定为：", 
-                                  org=(int(self.scn_w/2),int(self.scn_h/2-200)), color=self.color_while)
+                                  org=(int(self.scn_w/2),int(self.scn_h/2-200)), color=self.color_while,
+                                  fontFace=cv2.FontFace("UTF8"), fontSize=100)
 
