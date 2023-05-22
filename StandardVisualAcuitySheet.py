@@ -9,6 +9,7 @@ class standardSheet:
         self.real_size = list(np.array(self.ratio) * self.base)
         self.img_sign = cv2.imread('sign.png')
         self.screen_ppm = 10
+        self.score = [4.0, 4.1, 4.2, 4.3, 4.4, 4.5, 4.6, 4.7, 4.8, 4.9, 5.0, 5.1, 5.2, 5.3]
 
     # set distance from screen, Std 5m
     def set_distance(self, dist):
@@ -21,6 +22,10 @@ class standardSheet:
     def get_stage_scale(self, stage):
         # print('scale = ',self.real_size[stage] * self.screen_ppm / self.img_sign.shape[0])
         return self.real_size[stage] * self.screen_ppm / self.img_sign.shape[0] * self.dist_ratio
+
+    # get corresponding final score
+    def get_stage_result(self, stage):
+        return self.score[stage]
 
 # test = standardSheet()
 # test.set_ppm(100)
