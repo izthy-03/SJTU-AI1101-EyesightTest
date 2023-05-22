@@ -39,7 +39,6 @@ class monitor:
                 self.widthDensity = self.widthResolution / (self.width / 2.54)
                 self.heightDensity = self.heightResolution / (self.height / 2.54)
             print("Windows")
-            print(len("current "))
 
         if self.platform == "Linux":
             print("linux")
@@ -90,8 +89,3 @@ class monitor:
     # return pixels per millimetre
     def get_ppm(self):
         return self.heightDensity / 25.4
-
-# mnt = monitor()
-# mnt.show_info()
-# mm = 7.65
-# print(mnt.mm_to_px(mm))
