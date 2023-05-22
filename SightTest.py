@@ -57,5 +57,5 @@ class SightTest:
                 self.stage -= 1
                 self.reset_stage_record()
         
-        if self.stage < 0 or self.stage > self.MAX_STAGE:
+        if self.stage == -1 or self.stage == self.MAX_STAGE:
             self.test_end = True
