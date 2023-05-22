@@ -13,6 +13,7 @@ class ScreenShow:
 
         self.session = session
         self.flag_test_end = False
+        self.stage = 0
 
         self.sign_img_ori = cv2.imread(sign_source)
         self.sign_w, self.sign_h, self.sign_c = self.sign_img_ori.shape
@@ -62,15 +63,17 @@ class ScreenShow:
 
         cv2.destroyAllWindows()
     
-    def notify_test_end(self):
+    def notify_test_end(self, stage):
 
         self.flag_test_end = True
+        self.stage = stage
 
     def notify_sign_update(self):
         
         stage = self.session.stage
         sign_dirc = self.session.sign_direction
         scale = self.sheet.get_stage_scale(stage)
+        scale = 1
         size = (int(self.sign_w * scale), int(self.sign_h * scale))
         
         # 旋转
@@ -126,4 +129,11 @@ class ScreenShow:
                       int(self.center[0] - sign_w / 2) : int(self.center[0] + sign_w / 2)] = self.img_sign
 
     def draw_test_result(self):
-        pass
+        result = self.sheet.get_stage_result(self.stage)
+        self.screen = cv2.putText(img=self.screen, text="您老没事别看手机了快瞎了吧您", 
+                                  org=(int(self.scn_w/2),int(self.scn_h/2+200)), color=self.color_while)
+        self.screen = cv2.putText(img=self.screen, text=str(result), 
+                                  org=(int(self.scn_w/2),int(self.scn_h/2)), color=self.color_dark_grey)
+        self.screen = cv2.putText(img=self.screen, text="医眼丁真，鉴定为：", 
+                                  org=(int(self.scn_w/2),int(self.scn_h/2-200)), color=self.color_while)
+
