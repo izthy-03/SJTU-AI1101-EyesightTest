@@ -38,6 +38,7 @@ class ScreenShow:
 
     def start(self):
 
+        # 通过信号量flag_test_end来同步测试阶段
         while not self.flag_test_end:
 
             self.create()
@@ -62,12 +63,14 @@ class ScreenShow:
             pass
 
         cv2.destroyAllWindows()
-    
+
+    # 通知绘制线程结束
     def notify_test_end(self, stage):
 
         self.flag_test_end = True
         self.stage = stage
 
+    # 通知绘制线程更新信息
     def notify_sign_update(self):
         
         stage = self.session.stage
@@ -82,10 +85,12 @@ class ScreenShow:
         # 缩放
         self.img_sign = cv2.resize(self.img_sign, size)
 
+    # 创建白板
     def create(self):
 
         self.screen = numpy.zeros((self.scn_h, self.scn_w, 3), numpy.uint8)
 
+    # 绘制手势确认倒计时
     def draw_confirm_countdown(self):
         hand_dirc = self.session.hand_direction
         if not hand_dirc:
@@ -101,6 +106,7 @@ class ScreenShow:
                                   angle=hand_dirc*90-135, startAngle=0, endAngle=90, 
                                   color=self.color_grey, thickness=-1)
 
+    # 绘制阶段结束倒计时
     def draw_session_countdown(self):
         
         ratio = self.session.timer_session.get_countdown() / self.session.INTERVAL_SESSION
@@ -110,6 +116,7 @@ class ScreenShow:
                                   angle=-90, startAngle=0, endAngle=max(0,360*ratio), 
                                   color=self.color_red, thickness=-1)
 
+    # 绘制阶段对错
     def draw_session_result(self):
         sign_dirc = self.session.sign_direction
         result = self.session.result
@@ -118,6 +125,7 @@ class ScreenShow:
                                   angle=sign_dirc*90-135, startAngle=0, endAngle=90, 
                                   color=self.color_green if result else self.color_red, thickness=-1)
 
+    # 绘制E标志
     def draw_sign(self):
         # 保留中心空白
         self.screen = cv2.circle(img=self.screen, center=self.center, 
@@ -127,6 +135,7 @@ class ScreenShow:
         self.screen[int(self.center[1] - sign_h / 2) : int(self.center[1] + sign_h / 2),
                       int(self.center[0] - sign_w / 2) : int(self.center[0] + sign_w / 2)] = self.img_sign
 
+    # 绘制最终成绩
     def draw_test_result(self):
         append = ''
         if self.stage == -1:
@@ -136,15 +145,17 @@ class ScreenShow:
             append = '>'
             self.stage = 13
         result = self.sheet.get_stage_result(self.stage)
+
         self.screen = cv2.circle(img=self.screen, center=self.center, 
                                  radius=self.radius_white, color=self.color_while, thickness=-1)
         self.screen = putCenterText(img=self.screen, text=append+str(result), 
-                                  org=(int(self.scn_w/2),int(self.scn_h/2)), color=self.color_dark_grey,
+                                  org=(int(self.scn_w/2),int(self.scn_h/2)), color=self.color_grey,
                                   fontFace=cv2.FONT_HERSHEY_COMPLEX, fontScale=5, thickness=5)
         self.screen = putCenterText(img=self.screen, text="Your Test Result is", 
                                   org=(int(self.scn_w/2),int(self.scn_h/2-250)), color=self.color_while,
                                   fontFace=cv2.FONT_HERSHEY_COMPLEX, fontScale=2, thickness=1)
 
+# 辅助居中
 def putCenterText(img, text, org, fontFace, fontScale, color, thickness = 1):
         textSize = cv2.getTextSize(text, fontFace, fontScale, thickness)
         text_x = int(org[0] - textSize[0][0] / 2)

@@ -20,20 +20,30 @@ class SightTest:
     def start(self):
 
         self.draw_prompt()
+        # 创建一个测试阶段类 session
         session = Session()
+        # 创建图像绘制器
         screenShow = ScreenShow(session=session)
+        # 拆分线程进行绘制
         t_screenShow = Thread(target=screenShow.start)
         t_screenShow.start()
 
+        # 测试的主体循环
         while not self.test_end:
+            # 更新阶段的E朝向等信息
             session.update(self.stage)
+            # 同步另一线程的绘制信息
             screenShow.notify_sign_update()
+            # 开始当前阶段测试，捕捉被测者手势
             session.start()
+            # 获取当前阶段测试结果并更新执行逻辑
             result = session.result
             self.result_handler(result)
-        
+
         session.handDetector.capture.release()
+        # 通知绘制线程测试结束，绘制测试结果
         screenShow.notify_test_end(self.stage)
+
         t_screenShow.join()
 
     def reset_stage_record(self):
