@@ -1,6 +1,10 @@
+import time
+
 from SessionModule import Session
 from ScreenShowModule import ScreenShow
 from threading import Thread
+import numpy as np
+import cv2
 
 class SightTest:
 
@@ -15,6 +19,7 @@ class SightTest:
 
     def start(self):
 
+        self.draw_prompt()
         session = Session()
         screenShow = ScreenShow(session=session)
         t_screenShow = Thread(target=screenShow.start)
@@ -59,3 +64,19 @@ class SightTest:
         
         if self.stage == -1 or self.stage == self.MAX_STAGE:
             self.test_end = True
+
+    # 测试前提示
+    def draw_prompt(self):
+        from ScreenShowModule import putCenterText
+        img = np.zeros((720, 1080, 3), np.uint8)
+        # text = u"测试即将开始,请与屏幕保持一米距离"
+        text = "Press any key to start"
+        img = putCenterText(img, text, org=(1080 / 2, 720 / 2 - 50), color=(200, 200, 200),
+                      fontFace=cv2.FONT_HERSHEY_COMPLEX, fontScale=2, thickness=5)
+        text = "Please keep 1 meter away from screen"
+        img = putCenterText(img, text, org=(1080 / 2, 720 / 2 + 50), color=(200, 200, 200),
+                            fontFace=cv2.FONT_HERSHEY_COMPLEX, fontScale=1, thickness=2)
+
+        cv2.imshow('prompt', img)
+        cv2.waitKey(0)
+        cv2.destroyWindow('prompt')
